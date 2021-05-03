@@ -10,21 +10,36 @@ The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux
 * A HardDrive
 
 ## Installation
+### Partitioning
 The Partition layout in this guide will be as follows:
 | Partition | Filesystem | Size          | Partitiontype | Mount point |
 | --------- | ---------- | ------------- | ------------- | ----------- |
-| DRIVEp1   | FAT32      | 512MiB - 1GiB | ef00          | \boot       |
-| DRIVEp2   | ZFS        | REST          | bf00          | \           |
+| DISKp1   | FAT32      | 512MiB - 1GiB | ef00          | /boot       |
+| DISKp2   | ZFS        | REST          | bf00          | /           |
 
 First, boot from the PC you are going to install ArchLinux to, and boot from the USB Stick. I would recommend to start an ssh server, to do that type `systemctl start sshd.service` then set a root password with `passwd`. To connect to the server type `ssh root@IP` where IP is the IP of your ssh server, to find it, type `ip addr`. \
 \
-To start Partitioning type `lsblk` to find the device you want to partition. In we will call it `DRIVE`. \
+To start Partitioning type `lsblk` to find the device you want to partition. It will be referenced with `DISK` from now on. \
 
 start partitioning with `gdisk /dev/DISK` (or any other tool) \
-with gdisk type: \
+in gdisk type: \
 >`o` => to start new gpt partition scheme \
 >`y` => to confirm \
 >`n` => to create a new partition (this will be our /boot partition) \
 >`​` or `1` => to make it the first partition (`​` means nothing e.g. just press ENTER) \
 >`​` => to start at the first usable sector \
 >`+1GiB` => to make the partition 1GiB \
+>`ef00` => to set the partition type to EFI system partition \
+\
+now create the second partiton for the system \
+>`n` => to create a new partition (this will be our / partition) \
+>`​` or `2` => to make it the second partition (`​` means nothing e.g. just press ENTER) \
+>`​` => to make it start at the first usable sector
+>`​` => to make it end at the last usable sector
+>`bf00` => to set the partition type to Solaris root \
+\
+then type `p` to check the partition layout and then type `w` and `y` to confirm. \
+\
+now format the /boot partition to FAT32 with `mkfs.vfat -F 32 /dev/DISKp1` \
+for zfs we need to reference the disk by its id, to get it type `ls -al /dev/disk/by-partuuid` and remember the partuuid of your root partition e.g. `DISKp2` \
+
