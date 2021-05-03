@@ -23,6 +23,7 @@ To start Partitioning type `lsblk` to find the device you want to partition. It 
 
 start partitioning with `gdisk /dev/DISK` (or any other tool) \
 in gdisk type: \
+\
 \>`o` => to start new gpt partition scheme \
 \>`y` => to confirm \
 \>`n` => to create a new partition (this will be our /boot partition) \
@@ -32,6 +33,7 @@ in gdisk type: \
 \>`ef00` => to set the partition type to EFI system partition \
 \
 now create the second partiton for the system \
+\
 \>`n` => to create a new partition (this will be our / partition) \
 \>`​` or `2` => to make it the second partition (`​` means nothing e.g. just press ENTER) \
 \>`​` => to make it start at the first usable sector
