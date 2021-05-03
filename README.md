@@ -28,7 +28,7 @@ in gdisk type: \
 >`n` => to create a new partition (this will be our /boot partition) \
 >`​` or `1` => to make it the first partition (`​` means nothing e.g. just press ENTER) \
 >`​` => to start at the first usable sector \
->`+1GiB` => to make the partition 1GiB \
+>`+xGiB` or `+xMiB` => to make the partition x GiB/MiB \
 >`ef00` => to set the partition type to EFI system partition \
 \
 now create the second partiton for the system \
