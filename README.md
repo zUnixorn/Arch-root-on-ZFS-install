@@ -6,12 +6,25 @@ You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Insta
 The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dualbooting from seperate HardDrives. Note that we are installing on an UEFI system.
 
 ## Prequisites
-* USB Drive with an ArchISO that has ZFS installed (can be downloaded unofficialy or made using [ArchISO](https://wiki.archlinux.org/title/Archiso))
-* A HardDrive, in this guide refered to as `DRIVE`
+* USB Stick with an ArchISO that has ZFS installed (can be downloaded unofficialy or made using [ArchISO](https://wiki.archlinux.org/title/Archiso))
+* A HardDrive
 
 ## Installation
 The Partition layout in this guide will be as follows:
-| Partition | Filesystem | Size          | Partitiontype |
-| --------- | ---------- | ------------- | ------------- |
-| DRIVEp1   | FAT32      | 512MiB - 1GiB | ef00          |
-| DRIVEp2   | ZFS        | REST          | bf00          |
+| Partition | Filesystem | Size          | Partitiontype | Mount point |
+| --------- | ---------- | ------------- | ------------- | ----------- |
+| DRIVEp1   | FAT32      | 512MiB - 1GiB | ef00          | \boot       |
+| DRIVEp2   | ZFS        | REST          | bf00          | \           |
+
+First, boot from the PC you are going to install ArchLinux to, and boot from the USB Stick. I would recommend to start an ssh server, to do that type `systemctl start sshd.service` then set a root password with `passwd`. To connect to the server type `ssh root@IP` where IP is the IP of your ssh server, to find it, type `ip addr`. \
+\
+To start Partitioning type `lsblk` to find the device you want to partition. In we will call it `DRIVE`. \
+
+start partitioning with `gdisk /dev/DISK` (or any other tool) \
+with gdisk type:
+>`o` => to start new gpt partition scheme
+>`y` => to confirm
+>`n` => to create a new partition (this will be our /boot partition)
+>`` or `1` => to make it the first partition (`` means nothing e.g. just press ENTER)
+>`` => to start at the first usable sector
+>`+1GiB` => to make the partition 1GiB
