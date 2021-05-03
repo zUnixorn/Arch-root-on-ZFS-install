@@ -21,10 +21,10 @@ First, boot from the PC you are going to install ArchLinux to, and boot from the
 To start Partitioning type `lsblk` to find the device you want to partition. In we will call it `DRIVE`. \
 
 start partitioning with `gdisk /dev/DISK` (or any other tool) \
-with gdisk type:
->`o` => to start new gpt partition scheme
->`y` => to confirm
->`n` => to create a new partition (this will be our /boot partition)
->`` or `1` => to make it the first partition (`` means nothing e.g. just press ENTER)
->`` => to start at the first usable sector
->`+1GiB` => to make the partition 1GiB
+with gdisk type: \
+>`o` => to start new gpt partition scheme \
+>`y` => to confirm \
+>`n` => to create a new partition (this will be our /boot partition) \
+>`` or `1` => to make it the first partition (`` means nothing e.g. just press ENTER) \
+>`` => to start at the first usable sector \
+>`+1GiB` => to make the partition 1GiB \
