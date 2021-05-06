@@ -70,6 +70,7 @@ zpool create -f -o ashift=9         \
 </td>
 <td>
 
+```
 set to 9 for 512 bit and 12 for 4096 bit sector size, to get the size type `lsblk -o NAME,PHY-SEC` \
 \
 \
@@ -81,6 +82,8 @@ set to 9 for 512 bit and 12 for 4096 bit sector size, to get the size type `lsbl
 \
 \
 used for encryption
+```
+
 </td>
 </tr>
 </table>
