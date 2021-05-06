@@ -50,7 +50,8 @@ now create the pool for your root with: \
   <tr>
     <td>
       
-      ```zpool create -f -o ashift=9         \
+      ```
+      zpool create -f -o ashift=9         \
              -O acltype=posixacl       \
              -O relatime=on            \
              -O xattr=sa               \
@@ -63,7 +64,9 @@ now create the pool for your root with: \
              -O encryption=aes-256-gcm \
              -O keyformat=passphrase   \
              -O keylocation=prompt     \
-             zroot /dev/disk/by-id/usb-IB-1816M_-C31_DD56419883F8E-0:0-part2```
+             zroot /dev/disk/by-id/usb-IB-1816M_-C31_DD56419883F8E-0:0-part2
+             ```
+             
     </td>
     <td>
       explain
