@@ -46,6 +46,14 @@ and format the /boot partition to FAT32 with `mkfs.vfat -F 32 /dev/DISKp1`, \
 for zfs we need to reference the disk by its id, to get it type `ls -al /dev/disk/by-id` and remember the id of your root partition e.g. `DISK.xxxxxxxxxxxxxxxx-part2` (can have a different format depending on your disk) \
 \
 now create the pool for your root with: \
+<table>
+  <tr>
+    <td>
+      test
+    </td>
+  </tr>
+</table>
+
 | ```zpool create -f -o ashift=9         \ | aa |
 |              -O acltype=posixacl       \ |    |
 |              -O relatime=on            \ |    |
