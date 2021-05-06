@@ -51,7 +51,7 @@ now create the pool for your root with: \
 <td>
        
 ```
-zpool create -f -o ashift=9         \
+zpool create -f -o ashift=X         \
        -O acltype=posixacl       \
        -O relatime=on            \
        -O xattr=sa               \
@@ -64,24 +64,27 @@ zpool create -f -o ashift=9         \
        -O encryption=aes-256-gcm \
        -O keyformat=passphrase   \
        -O keylocation=prompt     \
-       zroot /dev/disk/by-id/usb-IB-1816M_-C31_DD56419883F8E-0:0-part2
+       zroot /dev/disk/by-id/DISK.xxxxxxxxxxxxxxxx-part2
 ```
 
 </td>
 <td>
 
 ```
-set to 9 for 512 bit and 12 for 4096 bit sector size, to get the size type `lsblk -o NAME,PHY-SEC` \
-\
-\
-\
-\
-\
-\
-\
-\
-\
-used for encryption
+replace "X" with 9 for 512 bit and 12 for 4096 bit sector size, to get the size type "lsblk -o NAME,PHY-SEC"
+​
+​
+​
+​
+​
+​
+​
+​
+​
+remove if you don't want encryption, set encryption algorythm
+remove if you don't want encryption, sets the keyformat (other options are keyfile for example)
+remove if you don't want encryption, sets the keylocation
+replace with your root partition id
 ```
 
 </td>
