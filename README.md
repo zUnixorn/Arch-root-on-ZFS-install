@@ -49,6 +49,7 @@ now create the pool for your root with: \
 <table>
 <tr>
 <td>
+       
 ```
 zpool create -f -o ashift=9         \
        -O acltype=posixacl       \
@@ -65,6 +66,7 @@ zpool create -f -o ashift=9         \
        -O keylocation=prompt     \
        zroot /dev/disk/by-id/usb-IB-1816M_-C31_DD56419883F8E-0:0-part2
 ```
+
 </td>
 <td>
 </td>
