@@ -46,17 +46,17 @@ and format the /boot partition to FAT32 with `mkfs.vfat -F 32 /dev/DISKp1`, \
 for zfs we need to reference the disk by its id, to get it type `ls -al /dev/disk/by-id` and remember the id of your root partition e.g. `DISK.xxxxxxxxxxxxxxxx-part2` (can have a different format depending on your disk) \
 \
 now create the pool for your root with: \
-| ```zpool create -f -o ashift=9         \ |
-|              -O acltype=posixacl       \ |
-|              -O relatime=on            \ |
-|              -O xattr=sa               \ |
-|              -O dnodesize=legacy       \ |
-|              -O normalization=formD    \ |
-|              -O mountpoint=none        \ |
-|              -O canmount=off           \ |
-|              -O devices=off            \ |
-|              -R /mnt                   \ |
-|              -O encryption=aes-256-gcm \ |
-|              -O keyformat=passphrase   \ |
-|              -O keylocation=prompt     \ |
-|              zroot /dev/disk/by-id/DISK.xxxxxxxxxxxxxxxx-part2``` |
+| ```zpool create -f -o ashift=9         \ | aa |
+|              -O acltype=posixacl       \ |    |
+|              -O relatime=on            \ |    |
+|              -O xattr=sa               \ |    |
+|              -O dnodesize=legacy       \ |    |
+|              -O normalization=formD    \ |    |
+|              -O mountpoint=none        \ |    |
+|              -O canmount=off           \ |    |
+|              -O devices=off            \ |    |
+|              -R /mnt                   \ |    |
+|              -O encryption=aes-256-gcm \ |    |
+|              -O keyformat=passphrase   \ |    |
+|              -O keylocation=prompt     \ |    |
+|              zroot /dev/disk/by-id/DISK.xxxxxxxxxxxxxxxx-part2``` |   |
