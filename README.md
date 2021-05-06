@@ -50,22 +50,22 @@ now create the pool for your root with: \
   <tr>
     <td>
       
-      ```
-      zpool create -f -o ashift=9         \
-             -O acltype=posixacl       \
-             -O relatime=on            \
-             -O xattr=sa               \
-             -O dnodesize=legacy       \
-             -O normalization=formD    \
-             -O mountpoint=none        \
-             -O canmount=off           \
-             -O devices=off            \
-             -R /mnt                   \
-             -O encryption=aes-256-gcm \
-             -O keyformat=passphrase   \
-             -O keylocation=prompt     \
-             zroot /dev/disk/by-id/usb-IB-1816M_-C31_DD56419883F8E-0:0-part2
-             ```
+```
+zpool create -f -o ashift=9         \
+       -O acltype=posixacl       \
+       -O relatime=on            \
+       -O xattr=sa               \
+       -O dnodesize=legacy       \
+       -O normalization=formD    \
+       -O mountpoint=none        \
+       -O canmount=off           \
+       -O devices=off            \
+       -R /mnt                   \
+       -O encryption=aes-256-gcm \
+       -O keyformat=passphrase   \
+       -O keylocation=prompt     \
+       zroot /dev/disk/by-id/usb-IB-1816M_-C31_DD56419883F8E-0:0-part2
+```
              
     </td>
     <td>
@@ -74,17 +74,4 @@ now create the pool for your root with: \
   </tr>
 </table>
 
-| ```zpool create -f -o ashift=9         \ | aa |
-|              -O acltype=posixacl       \ |    |
-|              -O relatime=on            \ |    |
-|              -O xattr=sa               \ |    |
-|              -O dnodesize=legacy       \ |    |
-|              -O normalization=formD    \ |    |
-|              -O mountpoint=none        \ |    |
-|              -O canmount=off           \ |    |
-|              -O devices=off            \ |    |
-|              -R /mnt                   \ |    |
-|              -O encryption=aes-256-gcm \ |    |
-|              -O keyformat=passphrase   \ |    |
-|              -O keylocation=prompt     \ |    |
-|              zroot /dev/disk/by-id/DISK.xxxxxxxxxxxxxxxx-part2``` |   |
+
