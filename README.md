@@ -7,7 +7,7 @@ The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux
 
 ## Installation
 ### Partitioning
-The Partition layout in this guide will be as follows:
+The Partition layout will be as follows:
 | Partition | Filesystem | Size          | Partitiontype | Mount point |
 | --------- | ---------- | ------------- | ------------- | ----------- |
 | DISKp1   | FAT32      | 512MiB - 1GiB | ef00          | /boot       |
