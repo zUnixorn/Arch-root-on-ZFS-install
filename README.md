@@ -77,11 +77,11 @@ find the sector size with "lsblk -o NAME,PHY-SEC"
 ​
 ​
 ​
->remove if you don't want encryption
->remove if you don't want encryption
->remove if you don't want encryption
+< remove if you don't want encryption
+<
+<
+replace with your root partition id
 ```
-`replace with your root partition id`
 
 </td>
 </tr>
