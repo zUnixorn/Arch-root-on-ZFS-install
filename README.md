@@ -125,3 +125,11 @@ mount the efi partiton at `/mnt/boot` with `mount /dev/DISKp1 /mnt/boot` and set
 finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a space separated list of packages you need in the new system, it should only contain nessesary packages, the rest should be installed when chrooted. An example would be `base base-devel neovim openssh opendoas` and in some cases a networkmanager like NetworkManager or iwctl if you want to use wifi with systemd-networkmanager.
 
 ### configuring the system for zfs
+generate a fstab with `genfstab -U -p /mnt >> /mnt/etc/fstab` and edit it to exclude the all zfs datasets (should only contain efi partition) by commenting them out, the lines to comment out are most likely:
+```
+>comment out zroot/ROOT/default
+ >comment out zroot/data/home
+ >comment out zroot/data/home/root
+ ```
+ 
+ chroot into the new system with `arch-chroot /mnt`.
