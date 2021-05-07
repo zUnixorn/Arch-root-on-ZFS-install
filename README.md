@@ -86,9 +86,11 @@ replace with your root partition id
 </td>
 </tr>
 </table>
-Note that in this case the root pool is called zroot, same as in the arch wiki. But one may change it to somthing like rpool, like its typicaly called in solaris systems.
+
+Note that in this case the root pool is called zroot, same as in the arch wiki. But one may change it to somthing like rpool, like its typicaly called in solaris systems. \
 \
-create the root and home datasets for `zroot` with \
+create the root and home datasets for `zroot` with
+
 ```
 zfs create -o mountpoint=none zroot/data; \
 zfs create -o mountpoint=none zroot/ROOT; \
@@ -97,9 +99,7 @@ zfs create -o mountpoint=/home zroot/data/home; \
 zfs create -o mountpoint=/root zroot/data/home/root;
 ```
 
-now check if the any datasets are mounted with `zfs get mounted` and if so unmount them with `zfs umount -a` and optionally delete the created folders with `rm -rf /mnt/*`
-\
-and then check if everything worked so far with `zfs list`, the output should look similar to this:
+now check if the any datasets are mounted with `zfs get mounted` and if so unmount them with `zfs umount -a` and optionally delete the created folders with `rm -rf /mnt/*`, then check if everything worked so far with `zfs list`. The output should look similar to this:
 
 ```
 NAME                   USED  AVAIL     REFER  MOUNTPOINT
@@ -110,7 +110,7 @@ zroot/data             xxxK   xxxG       xxK  none
 zroot/data/home        xxxK   xxxG       xxK  /mnt/home
 zroot/data/home/root   xxxK   xxxG       xxK  /mnt/root
 ```
-\
+
 ### Mounting (useful to remember, fixing broken systems)
 To confirm everything so far worked export and reimport the pool (in this case `zroot`). To do this type `zpool export zroot` to export the pool (to be able to export a pool make sure all datasets are unmounted, which we already made sure) and reimport it with `zpool import -d /dev/disk/by-id -R /mnt zroot -N
 `. \
