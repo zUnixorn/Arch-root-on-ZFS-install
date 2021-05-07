@@ -3,11 +3,7 @@
 You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certantly more uptodate. The purpose of this guid is to provide a more straight forward installation guide, as the arch wiki's guide is sometimes vague as its designed to be usefull for any installation.
 
 ### Goal
-The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dualbooting from seperate HardDrives. Note that we are installing on an UEFI system.
-
-## Prequisites
-* USB Stick with an ArchISO that has ZFS installed (can be downloaded unofficialy or made using [ArchISO](https://wiki.archlinux.org/title/Archiso))
-* A HardDrive
+The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dualbooting from seperate HardDrives. Please keep in mind that this guide assumes a system using UEFI.
 
 ## Installation
 ### Partitioning
@@ -90,5 +86,42 @@ replace with your root partition id
 </td>
 </tr>
 </table>
+Note that in this case the root pool is called zroot, same as in the arch wiki. But one may change it to somthing like rpool, like its typicaly called in solaris systems.
+\
+create the root and home datasets for `zroot` with \
+```
+zfs create -o mountpoint=none zroot/data; \
+zfs create -o mountpoint=none zroot/ROOT; \
+zfs create -o mountpoint=/ -o canmount=noauto zroot/ROOT/default; \
+zfs create -o mountpoint=/home zroot/data/home; \
+zfs create -o mountpoint=/root zroot/data/home/root;
+```
 
+now check if the any datasets are mounted with `zfs get mounted` and if so unmount them with `zfs umount -a` and optionally delete the created folders with `rm -rf /mnt/*
+` \
+\
+and then check if everything worked so far with `zfs list`, the output should look similar to this:
+```
+NAME                   USED  AVAIL     REFER  MOUNTPOINT
+zroot                  xxxK   xxxG       xxK  none
+zroot/ROOT             xxxK   xxxG       xxK  none
+zroot/ROOT/default     xxxK   xxxG       xxK  /mnt
+zroot/data             xxxK   xxxG       xxK  none
+zroot/data/home        xxxK   xxxG       xxK  /mnt/home
+zroot/data/home/root   xxxK   xxxG       xxK  /mnt/root
+```
+\
+### Mounting (useful to remember, fixing broken systems)
+To confirm everything so far worked export and reimport the pool (in this case `zroot`). To do this type `zpool export zroot` to export the pool (to be able to export a pool make sure all datasets are unmounted, which we already made sure) and reimport it with `zpool import -d /dev/disk/by-id -R /mnt zroot -N
+`. \
+\
+After beeing imported, the pool still needs to be mounted. In case you encrypted your pool, it first needs to be unlocked with `zfs load-key zroot`, which will prompt you for a password assuming you chose promt as the keylocation for your root pool. Now make sure to first only mount the `ROOT/default` dataset with `zfs mount zroot/ROOT/default` as the order is important, then the remaining datasets with `zfs mount -a`.
 
+### Finishing touches before actual install
+create the mount mountpoint at /mnt/boot with `mkdir /mnt/boot`. Its worth mentioning that nowdays its more common to mount uefi systems at `/efi` but in our case `/boot` works better with rEFInd. \
+\
+mount the efi partiton at `/mnt/boot` with `mount /dev/DISKp1 /mnt/boot` and set the root to boot from for `zroot` with `zpool set bootfs=zroot/ROOT/default zroot`. \
+\
+finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a space separated list of packages you need in the new system, it should only contain nessesary packages, the rest should be installed when chrooted. An example would be `base base-devel neovim openssh opendoas` and in some cases a networkmanager like NetworkManager or iwctl if you want to use wifi with systemd-networkmanager.
+
+### configuring the system for zfs
