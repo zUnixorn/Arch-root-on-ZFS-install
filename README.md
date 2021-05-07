@@ -151,4 +151,4 @@ install rEFInd and put this `"Standard boot options"     "rw zfs=bootfs"` in `re
 
 lastly set your root password with `passwd`
 
-the system is now ready to use and bootable but it should still be configured as shown in the vanilla arch install guide to be properly usable
+the system is now ready to use and bootable but it should still be configured as shown in the [vanilla arch install guide](https://wiki.archlinux.org/title/installation_guide#Time_zone) to be properly usable
