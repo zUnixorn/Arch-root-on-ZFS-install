@@ -68,7 +68,7 @@ zpool create -f -o ashift=X         \
 
 ```
 X = 9 for 512 bit or 12 for 4096 bit sector size, 
-       find the sector size with "lsblk -o NAME,PHY-SEC"
+find the sector size with "lsblk -o NAME,PHY-SEC"
 ​
 ​
 ​
