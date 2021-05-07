@@ -67,7 +67,8 @@ zpool create -f -o ashift=X         \
 <td>
 
 ```
-replace "X" with 9 for 512 bit and 12 for 4096 bit sector size, to get the size type "lsblk -o NAME,PHY-SEC"
+X = 9 for 512 bit or 12 for 4096 bit sector size, 
+       find the sector size with "lsblk -o NAME,PHY-SEC"
 ​
 ​
 ​
@@ -76,10 +77,9 @@ replace "X" with 9 for 512 bit and 12 for 4096 bit sector size, to get the size 
 ​
 ​
 ​
-​
-remove if you don't want encryption, set encryption algorythm
-remove if you don't want encryption, sets the keyformat (other options are keyfile for example)
-remove if you don't want encryption, sets the keylocation
+remove if you don't want encryption
+remove if you don't want encryption
+remove if you don't want encryption
 replace with your root partition id
 ```
 
