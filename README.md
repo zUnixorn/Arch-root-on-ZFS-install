@@ -127,9 +127,28 @@ finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a
 ### configuring the system for zfs
 generate a fstab with `genfstab -U -p /mnt >> /mnt/etc/fstab` and edit it to exclude the all zfs datasets (should only contain efi partition) by commenting them out, the lines to comment out are most likely:
 ```
->comment out zroot/ROOT/default
- >comment out zroot/data/home
- >comment out zroot/data/home/root
- ```
+zroot/ROOT/default
+zroot/data/home
+zroot/data/home/root
+```
  
- chroot into the new system with `arch-chroot /mnt`.
+chroot into the new system with `arch-chroot /mnt`.
+
+now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add the arch-zfs repo to pacman.
+
+generate an appropriate host id with: `zgenhostid $(hostid)` and create a zfs cache file with `zpool set cachefile=/etc/zfs/zpool.cache zroot`. Your system won't boot if you forget this step. \
+\
+modifiy the kernel hooks in `/etc/mkinitcpio.conf` to `HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)`, that means adding `zfs` infront of `filesystems` and moving `keyboard` infront of both. You may optionally also remove fsck, as its not needed when the root is on a zfs filesystem. Then generate the new hooks with `mkinitcpio -p KERNEL` where kernel is the name of your kernal, in most cases `linux`. \
+\
+Also enable these services `zfs.target`, `zfs-import-cache`, `zfs-mount`, `zfs-import.target` with these commands
+```
+systemctl enable zfs.target
+systemctl enable zfs-import-cache
+systemctl enable zfs-mount
+systemctl enable zfs-import.target
+```
+install rEFInd and put this `"Standard boot options"     "rw zfs=bootfs"` in `refind_linux.conf`
+
+lastly set your root password with `passwd`
+
+the system is now ready to use and bootable but it should still be configured as shown in the vanilla arch install guide to be properly usable
