@@ -97,10 +97,10 @@ zfs create -o mountpoint=/home zroot/data/home; \
 zfs create -o mountpoint=/root zroot/data/home/root;
 ```
 
-now check if the any datasets are mounted with `zfs get mounted` and if so unmount them with `zfs umount -a` and optionally delete the created folders with `rm -rf /mnt/*
-` \
+now check if the any datasets are mounted with `zfs get mounted` and if so unmount them with `zfs umount -a` and optionally delete the created folders with `rm -rf /mnt/*`
 \
 and then check if everything worked so far with `zfs list`, the output should look similar to this:
+
 ```
 NAME                   USED  AVAIL     REFER  MOUNTPOINT
 zroot                  xxxK   xxxG       xxK  none
