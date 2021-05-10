@@ -148,7 +148,7 @@ systemctl enable zfs-import-cache
 systemctl enable zfs-mount
 systemctl enable zfs-import.target
 ```
-\
+### installing boot manager and exporting the pools to finalize
 install rEFInd with `pacman -S refind` and let it install its files to /boot with `refind-install`, then add `"Standard boot options"     "rw zfs=bootfs"` to `/boot/refind_linux.conf` for further install options consider [the arch wiki](https://wiki.archlinux.org/title/REFInd). \
 \
 lastly set your root password with `passwd`. And don't forget to export and unmount the pools and partitions with `umount /mnt/boot`, `zfs umount -a`, `zpool export zroot`. If that fails consider using the `-f`option to force the unmount and export and if that also failse try using the legacy unmount option with the force flag like `umount -l /mnt` \
