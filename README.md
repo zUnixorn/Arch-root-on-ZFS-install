@@ -1,6 +1,6 @@
-# Arch-root-on-ZFS-intall
+# Arch-root-on-ZFS-install
 ## Introduction
-You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certainly more up to date. The purpose of this guid is to provide a more straight forward installation guide, as the one in the arch wiki is sometimes a bit vague as it's designed to be usefull for any installation.
+You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certainly more up to date. The purpose of this guid is to provide a more straight forward installation guide, as the one in the arch wiki is sometimes a bit vague as it's designed to be useful for any installation.
 
 ### Goal
 The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dual-booting from separate HardDrives. Please keep in mind that this guide assumes a system using UEFI.
@@ -28,7 +28,7 @@ in gdisk type: \
 \>`+xGiB` or `+xMiB` => to make the partition x GiB/MiB \
 \>`ef00` => to set the partition type to EFI system partition \
 \
-now create the second partiton for the system \
+now create the second partition for the system \
 \
 \>`n` => to create a new partition (this will be our / partition) \
 \>`​` or `2` => to make it the second partition (`​` means nothing e.g. just press ENTER) \
@@ -87,7 +87,7 @@ replace with your root partition id
 </tr>
 </table>
 
-Note that in this case the root pool is called zroot, same as in the arch wiki. But one may change it to somthing like rpool, like its typicaly called in solaris systems. \
+Note that in this case the root pool is called zroot, same as in the arch wiki. But one may change it to something like rpool, like its typically called in solaris systems. \
 \
 create the root and home datasets for `zroot` with
 
@@ -115,14 +115,14 @@ zroot/data/home/root   xxxK   xxxG       xxK  /mnt/root
 To confirm everything so far worked export and reimport the pool (in this case `zroot`). To do this type `zpool export zroot` to export the pool (to be able to export a pool make sure all datasets are unmounted, which we already made sure) and reimport it with `zpool import -d /dev/disk/by-id -R /mnt zroot -N
 `. \
 \
-After beeing imported, the pool still needs to be mounted. In case you encrypted your pool, it first needs to be unlocked with `zfs load-key zroot`, which will prompt you for a password assuming you chose promt as the keylocation for your root pool. Now make sure to first only mount the `ROOT/default` dataset with `zfs mount zroot/ROOT/default` as the order is important, then the remaining datasets with `zfs mount -a`.
+After being imported, the pool still needs to be mounted. In case you encrypted your pool, it first needs to be unlocked with `zfs load-key zroot`, which will prompt you for a password assuming you chose prompt as the key location for your root pool. Now make sure to first only mount the `ROOT/default` dataset with `zfs mount zroot/ROOT/default` as the order is important, then the remaining datasets with `zfs mount -a`.
 
 ### Finishing touches before actual install
-create the mount mountpoint at /mnt/boot with `mkdir /mnt/boot`. Its worth mentioning that nowdays its more common to mount uefi systems at `/efi` but in our case `/boot` works better with rEFInd. \
+create the mount mountpoint at /mnt/boot with `mkdir /mnt/boot`. Its worth mentioning that nowadays its more common to mount uefi systems at `/efi` but in our case `/boot` works better with rEFInd. \
 \
-mount the efi partiton at `/mnt/boot` with `mount /dev/DISKp1 /mnt/boot` and set the root to boot from for `zroot` with `zpool set bootfs=zroot/ROOT/default zroot`. \
+mount the efi partition at `/mnt/boot` with `mount /dev/DISKp1 /mnt/boot` and set the root to boot from for `zroot` with `zpool set bootfs=zroot/ROOT/default zroot`. \
 \
-finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a space separated list of packages you need in the new system, it should only contain nessesary packages, the rest should be installed when chrooted. An example would be `base base-devel neovim openssh opendoas` and in some cases a networkmanager like NetworkManager or iwctl if you want to use wifi with systemd-networkmanager.
+finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a space separated list of packages you need in the new system, it should only contain necessary packages, the rest should be installed when chrooted. An example would be `base base-devel neovim openssh opendoas` and in some cases a networkmanager like NetworkManager or iwctl if you want to use wifi with systemd-networkmanager.
 
 ### configuring the system for zfs
 generate a fstab with `genfstab -U -p /mnt >> /mnt/etc/fstab` and edit it to exclude the all zfs datasets (should only contain efi partition) by commenting them out, the lines to comment out are most likely:
@@ -138,7 +138,7 @@ now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add th
 
 generate an appropriate host id with: `zgenhostid $(hostid)` and create a zfs cache file with `zpool set cachefile=/etc/zfs/zpool.cache zroot`. Your system won't boot if you forget this step. \
 \
-modifiy the kernel hooks in `/etc/mkinitcpio.conf` to `HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)`, that means adding `zfs` infront of `filesystems` and moving `keyboard` infront of both. You may optionally also remove fsck, as its not needed when the root is on a zfs filesystem. Then generate the new hooks with `mkinitcpio -p KERNEL` where kernel is the name of your kernel, in most cases `linux`. \
+modify the kernel hooks in `/etc/mkinitcpio.conf` to `HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)`, that means adding `zfs` in front of `filesystems` and moving `keyboard` in front of both. You may optionally also remove fsck, as it's not needed when the root is on a zfs filesystem. Then generate the new hooks with `mkinitcpio -p KERNEL` where kernel is the name of your kernel, in most cases `linux`. \
 \
 Also enable these services `zfs.target`, `zfs-import-cache`, `zfs-mount`, `zfs-import.target` with these commands
 ```
