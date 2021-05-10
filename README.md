@@ -138,7 +138,7 @@ now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add th
 
 generate an appropriate host id with: `zgenhostid $(hostid)` and create a zfs cache file with `zpool set cachefile=/etc/zfs/zpool.cache zroot`. Your system won't boot if you forget this step. \
 \
-modifiy the kernel hooks in `/etc/mkinitcpio.conf` to `HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)`, that means adding `zfs` infront of `filesystems` and moving `keyboard` infront of both. You may optionally also remove fsck, as its not needed when the root is on a zfs filesystem. Then generate the new hooks with `mkinitcpio -p KERNEL` where kernel is the name of your kernal, in most cases `linux`. \
+modifiy the kernel hooks in `/etc/mkinitcpio.conf` to `HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)`, that means adding `zfs` infront of `filesystems` and moving `keyboard` infront of both. You may optionally also remove fsck, as its not needed when the root is on a zfs filesystem. Then generate the new hooks with `mkinitcpio -p KERNEL` where kernel is the name of your kernel, in most cases `linux`. \
 \
 Also enable these services `zfs.target`, `zfs-import-cache`, `zfs-mount`, `zfs-import.target` with these commands
 ```
