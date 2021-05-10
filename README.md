@@ -151,6 +151,6 @@ systemctl enable zfs-import.target
 \
 install rEFInd with `pacman -S refind` and let it install its files to /boot with `refind-install`, then add `"Standard boot options"     "rw zfs=bootfs"` to `/boot/refind_linux.conf` for further install options consider [the arch wiki](https://wiki.archlinux.org/title/REFInd). \
 \
-lastly set your root password with `passwd` \
+lastly set your root password with `passwd`. \
 \
-the system is now ready to use and bootable but it should still be configured as shown in the [vanilla arch install guide](https://wiki.archlinux.org/title/installation_guide#Time_zone) to be properly usable
+the system is now ready to use and bootable but it should still be configured as shown in the [vanilla arch install guide](https://wiki.archlinux.org/title/installation_guide#Time_zone) to be properly usable.
