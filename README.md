@@ -122,7 +122,7 @@ create the mount mountpoint at /mnt/boot with `mkdir /mnt/boot`. Its worth menti
 \
 mount the efi partition at `/mnt/boot` with `mount /dev/DISKp1 /mnt/boot` and set the root to boot from for `zroot` with `zpool set bootfs=zroot/ROOT/default zroot`. \
 \
-finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a space separated list of packages you need in the new system, it should only contain necessary packages, the rest should be installed when chrooted. An example would be `base base-devel neovim openssh opendoas` and in some cases a networkmanager like NetworkManager or iwctl if you want to use wifi with systemd-networkmanager.
+finally "install" the system with `pacstrap /mnt PACKAGES` where `PACKAGES` is a space separated list of packages you need in the new system, it should only contain necessary packages, the rest should be installed when chrooted. An example would be `base base-devel neovim openssh opendoas` and in some cases a networkmanager like NetworkManager or iwctl if you want to use wifi with systemd-networkmanager. You could also copy the ArchISO `pacman.conf` to the new system with `cp /etc/pacman.conf /mnt/etc/`
 
 ### configuring the system for zfs
 generate a fstab with `genfstab -U -p /mnt >> /mnt/etc/fstab` and edit it to exclude the all zfs datasets (should only contain efi partition) by commenting them out, the lines to comment out are most likely:
@@ -134,8 +134,9 @@ zroot/data/home/root
  
 chroot into the new system with `arch-chroot /mnt`.
 
-now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add the arch-zfs repo to pacman.
-
+now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add the arch-zfs repo to pacman. Do it by adding ```[archzfs]
+Server = https://archzfs.com/$repo/$arch``` to the `pacman.conf`. Then if the versions of archzfs and linux match just type `pacman -S linux archzfs-linux`. *Solution needed:* If the versions don't match install the right version. \
+\
 generate an appropriate host id with: `zgenhostid $(hostid)` and create a zfs cache file with `zpool set cachefile=/etc/zfs/zpool.cache zroot`. Your system won't boot if you forget this step. \
 \
 modify the kernel hooks in `/etc/mkinitcpio.conf` to `HOOKS=(base udev autodetect modconf block keyboard zfs filesystems)`, that means adding `zfs` in front of `filesystems` and moving `keyboard` in front of both. You may optionally also remove fsck, as it's not needed when the root is on a zfs filesystem. Then generate the new hooks with `mkinitcpio -p KERNEL` where kernel is the name of your kernel, in most cases `linux`. \
@@ -147,8 +148,9 @@ systemctl enable zfs-import-cache
 systemctl enable zfs-mount
 systemctl enable zfs-import.target
 ```
-install rEFInd and put this `"Standard boot options"     "rw zfs=bootfs"` in `refind_linux.conf`
-
-lastly set your root password with `passwd`
-
+\
+install rEFInd with `pacman -S refind` and let it install its files to /boot with `refind-install`, then add `"Standard boot options"     "rw zfs=bootfs"` to `/boot/refind_linux.conf` for further install options consider [the arch wiki](https://wiki.archlinux.org/title/REFInd). \
+\
+lastly set your root password with `passwd` \
+\
 the system is now ready to use and bootable but it should still be configured as shown in the [vanilla arch install guide](https://wiki.archlinux.org/title/installation_guide#Time_zone) to be properly usable
