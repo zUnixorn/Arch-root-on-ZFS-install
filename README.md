@@ -1,19 +1,19 @@
 # Arch-root-on-ZFS-intall
 ## Introduction
-You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certantly more uptodate. The purpose of this guid is to provide a more straight forward installation guide, as the arch wiki's guide is sometimes vague as its designed to be usefull for any installation.
+You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certainly more up to date. The purpose of this guid is to provide a more straight forward installation guide, as the one in the arch wiki is sometimes a bit vague as it's designed to be usefull for any installation.
 
 ### Goal
-The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dualbooting from seperate HardDrives. Please keep in mind that this guide assumes a system using UEFI.
+The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dual-booting from separate HardDrives. Please keep in mind that this guide assumes a system using UEFI.
 
 ## Installation
 ### Partitioning
 The Partition layout will be as follows:
-| Partition | Filesystem | Size          | Partitiontype | Mount point |
+| Partition | Filesystem | Size          | Partition type | Mount point |
 | --------- | ---------- | ------------- | ------------- | ----------- |
 | DISKp1   | FAT32      | 512MiB - 1GiB | ef00          | /boot       |
 | DISKp2   | ZFS        | REST          | bf00          | /           |
 
-First, boot from the PC you are going to install ArchLinux to, and boot from the USB Stick. I would recommend to start an ssh server, to do that type `systemctl start sshd.service` then set a root password with `passwd`. To connect to the server type `ssh root@IP` where IP is the IP of your ssh server, to find it, type `ip addr`. \
+First, boot from the PC you are going to install ArchLinux to, and boot from the USB Stick. I would recommend starting an ssh server, to do that type `systemctl start sshd.service` then set a root password with `passwd`. To connect to the server type `ssh root@IP` where IP is the IP of your ssh server, to find it, type `ip addr`. \
 \
 To start Partitioning type `lsblk` to find the device you want to partition. It will be referenced with `DISK` from now on. \
 
