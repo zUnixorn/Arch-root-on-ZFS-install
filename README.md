@@ -134,8 +134,12 @@ zroot/data/home/root
  
 chroot into the new system with `arch-chroot /mnt`.
 
-now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add the arch-zfs repo to pacman. Do it by adding ```[archzfs]
-Server = https://archzfs.com/$repo/$arch``` to the `pacman.conf`. Then if the versions of archzfs and linux match just type `pacman -S linux archzfs-linux`. If they don't match add the [end.re](https://end.re/blog/ebp036_archzfs-repo-for-kernels/) repo if you don't want to manually install the right kernel version but keep in mind that this repo isn't official, so use with care. \
+now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add the arch-zfs repo to pacman. Do it by adding 
+```
+[archzfs]
+Server = https://archzfs.com/$repo/$arch
+``` 
+to the `pacman.conf`. Then if the versions of archzfs and linux match just type `pacman -S linux archzfs-linux`. If they don't match add the [end.re](https://end.re/blog/ebp036_archzfs-repo-for-kernels/) repo if you don't want to manually install the right kernel version but keep in mind that this repo isn't official, so use with care. \
 \
 generate an appropriate host id with: `zgenhostid $(hostid)` and create a zfs cache file with `zpool set cachefile=/etc/zfs/zpool.cache zroot`. Your system won't boot if you forget this step. \
 \
