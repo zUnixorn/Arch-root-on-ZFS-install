@@ -139,7 +139,9 @@ now follow the [instructions](https://github.com/archzfs/archzfs/wiki) to add th
 [archzfs]
 Server = https://archzfs.com/$repo/$arch
 ``` 
-to the `pacman.conf`. Then if the versions of archzfs and linux match just type `pacman -S linux archzfs-linux`. If they don't match add the [end.re](https://end.re/blog/ebp036_archzfs-repo-for-kernels/) repo if you don't want to manually install the right kernel version but keep in mind that this repo isn't official, so use with care. \
+to the `pacman.conf`. Then if the versions of archzfs and linux match just type `pacman -S linux archzfs-linux`. Should the key import fail download the key with `curl --remote-name https://archzfs.com/archzfs.gpg` and add it to the keychain with `pacman-key -a archzfs.gpg` then sign it with `pacman-key --lsign-key DDF7DB817396A49B2A2723F7403BD972F75D9D76` you may also delete the keyfile again with `rm -f archzfs.gpg` \
+\
+If they don't match add the [end.re](https://end.re/blog/ebp036_archzfs-repo-for-kernels/) repo if you don't want to manually install the right kernel version but keep in mind that this repo isn't official, so use with care. \
 \
 generate an appropriate host id with: `zgenhostid $(hostid)` and create a zfs cache file with `zpool set cachefile=/etc/zfs/zpool.cache zroot`. Your system won't boot if you forget this step. \
 \
