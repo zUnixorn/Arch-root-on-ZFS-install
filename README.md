@@ -1,6 +1,6 @@
 # Arch-root-on-ZFS-install
 ## Introduction
-You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certainly more up to date. The purpose of this guid is to provide a more straight forward installation guide, as the one in the arch wiki is sometimes a bit vague as it's designed to be useful for any installation.
+You should follow the guide on the [wiki](https://wiki.archlinux.org/title/Install_Arch_Linux_on_ZFS) alongside this guide as it will be certainly more up to date. The purpose of this guide is to provide a more straight forward installation guide, as the one in the arch wiki is sometimes a bit vague as it's designed to be useful for any installation.
 
 ### Goal
 The goal is to install ArchLinux with its root on a [ZFS](https://wiki.archlinux.org/title/ZFS) filesystem, using [rEFInd](https://wiki.archlinux.org/title/REFInd) as the boot manager to support easy dual-booting from separate HardDrives. Please keep in mind that this guide assumes a system using UEFI.
