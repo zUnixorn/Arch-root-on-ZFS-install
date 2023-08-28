@@ -154,6 +154,8 @@ systemctl enable zfs-import-cache
 systemctl enable zfs-mount
 systemctl enable zfs-import.target
 ```
+Before the next step, exit the chroot.
+
 ### installing the boot manager and exporting the pools to finalize
 Install rEFInd with `pacman -S refind` and let it install its files to /boot with `refind-install`, then add `"Standard boot options"     "rw zfs=bootfs"` to `/boot/refind_linux.conf` for further install options consider [the arch wiki](https://wiki.archlinux.org/title/REFInd). \
 \
